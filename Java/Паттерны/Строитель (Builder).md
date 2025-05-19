@@ -1,3 +1,61 @@
+### **3. Строитель (Builder)**
+**Зачем?** Чтобы создавать **сложные объекты по шагам** (особенно с множеством необязательных полей).  
+**Как?** Через цепочку методов (`setX().setY().build()`).  
+
+**Пример:**  
+```java
+class Pizza {
+    private String dough;
+    private String sauce;
+    private String topping;
+    
+    // Только через Builder!
+    private Pizza(PizzaBuilder builder) {
+        this.dough = builder.dough;
+        this.sauce = builder.sauce;
+        this.topping = builder.topping;
+    }
+    
+    public static class PizzaBuilder {
+        private String dough;
+        private String sauce;
+        private String topping;
+        
+        public PizzaBuilder dough(String dough) {
+            this.dough = dough;
+            return this; // Возвращает this для цепочки
+        }
+        
+        public PizzaBuilder sauce(String sauce) {
+            this.sauce = sauce;
+            return this;
+        }
+        
+        public PizzaBuilder topping(String topping) {
+            this.topping = topping;
+            return this;
+        }
+        
+        public Pizza build() {
+            return new Pizza(this);
+        }
+    }
+}
+
+// Использование
+Pizza pizza = new Pizza.PizzaBuilder()
+    .dough("тонкое")
+    .sauce("томатный")
+    .topping("пепперони")
+    .build();
+```
+**Когда использовать?**  
+— Когда у объекта много полей (особенно необязательных).  
+— Когда важно делать объекты неизменяемыми (`immutable`).  
+
+---
+
+
 ## Суть паттерна
 
 **Строитель** — это порождающий паттерн проектирования, который позволяет создавать сложные объекты пошагово. Строитель даёт возможность использовать один и тот же код строительства для получения разных представлений объектов.

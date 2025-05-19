@@ -1,3 +1,31 @@
+### **1. Прототип (Prototype)**
+**Зачем?** Чтобы создавать **новые объекты копированием** существующих (а не через `new`).  
+**Как?** Через метод `clone()` или фабрику прототипов.  
+
+**Пример:**  
+```java
+class Sheep implements Cloneable {
+    private String name;
+    
+    public Sheep(String name) { this.name = name; }
+    
+    @Override
+    public Sheep clone() throws CloneNotSupportedException {
+        return (Sheep) super.clone(); // Копия овечки!
+    }
+}
+
+// Использование
+Sheep original = new Sheep("Долли");
+Sheep clone = original.clone();
+System.out.println(clone.getName()); // "Долли" (новая овечка)
+```
+**Когда использовать?**  
+— Когда создание объекта дорого (например, загрузка из БД).  
+— Когда хотим избежать сложной инициализации.  
+
+---
+
 **Прототип** — это порождающий паттерн проектирования, который позволяет копировать объекты, не вдаваясь в подробности их реализации.
 
 ![Паттерн Прототип](https://refactoring.guru/images/patterns/content/prototype/prototype.png)

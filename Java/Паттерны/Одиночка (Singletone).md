@@ -1,3 +1,32 @@
+### **2. Одиночка (Singleton)**
+**Зачем?** Чтобы в программе был **только один экземпляр класса** (например, настройки или логгер).  
+**Как?** Делаем конструктор приватным и даем доступ через статический метод.  
+
+**Пример (ленивая инициализация):**  
+```java
+class Settings {
+    private static Settings instance;
+    
+    private Settings() {} // Запрещаем new Settings()
+    
+    public static Settings getInstance() {
+        if (instance == null) {
+            instance = new Settings();
+        }
+        return instance;
+    }
+}
+
+// Использование
+Settings settings = Settings.getInstance(); // Всегда один и тот же объект
+```
+**Когда использовать?**  
+— Для глобального доступа (например, к настройкам, кэшу, БД).  
+— Важно: в многопоточности используйте `synchronized` или `enum`.  
+
+---
+
+
 **Одиночка** — это порождающий паттерн проектирования, который гарантирует, что у класса есть только один экземпляр, и предоставляет к нему глобальную точку доступа.
 
 ![Паттерн Одиночка](https://refactoring.guru/images/patterns/content/singleton/singleton.png)
