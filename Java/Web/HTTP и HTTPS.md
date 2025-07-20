@@ -4,7 +4,7 @@
 - Тело (body): данные запроса (чаще всего в JSON формате)
 ## Пример HTTP запроса
 Запрос:
-```js
+```http
 POST /api/users HTTP/1.1
 Host: example.com
 Content-Type: application/json
@@ -17,7 +17,7 @@ Content-Length: 72
 }
 ```
 Ответ:
-```javascript
+```http
 HTTP/1.1 201 Created
 Content-Type: application/json
 Content-Length: 85
