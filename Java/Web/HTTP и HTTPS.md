@@ -3,13 +3,25 @@
 - Заголовки (header): метаинформация о запросе (Host, Content-Type и др.)
 - Тело (body): данные запроса (чаще всего в JSON формате)
 ## Пример HTTP запроса
-`POST /api/users HTTP/1.1`
-`Host: example.com`
+Запрос:
+```jsx
+POST /api/users HTTP/1.1
+Host: example.com
+Content-Type: application/json
+Content-Length: 72
+
+{
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "password": "secure123"
+}
+```
+Ответ:
+`HTTP/1.1 201 Created`
 `Content-Type: application/json`
-`Content-Length: 72`
+`Content-Length: 85`
 
 `{`
-    `"name": "John Doe",`
-    `"email": "johndoe@example.com",`
-    `"password": "secure123"`
+    `"id": 1,`
+    `"status": "created"`
 `}`
