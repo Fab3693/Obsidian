@@ -28,3 +28,13 @@ Content-Length: 85
 }
 ```
 
+```
+HTTP/1.1 201 Created
+Content-Type: application/json
+Content-Length: 85
+
+{
+    "id": 1,
+    "status": "created"
+}
+```
