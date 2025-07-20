@@ -27,3 +27,16 @@ Content-Length: 85
     "status": "created"
 }
 ```
+```
+POST /api/users HTTP/1.1
+Host: example.com
+Content-Type: application/json
+Content-Length: 72
+
+{
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "password": "secure123"
+}
+```
+
