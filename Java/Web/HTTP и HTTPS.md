@@ -28,10 +28,3 @@ Content-Length: 85
 }
 ```
 
-```
-private static List<String> toUpperCase(List<String> strings){  
-    return strings.stream().map(String::toUpperCase).toList();  
-}
-```
-
-
