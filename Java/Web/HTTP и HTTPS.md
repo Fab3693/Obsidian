@@ -28,3 +28,4 @@ Content-Length: 85
 }
 ```
 
+![[Pasted image 20250720151345.png]]
