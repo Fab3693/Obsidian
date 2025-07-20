@@ -17,7 +17,7 @@ Content-Length: 72
 }
 ```
 Ответ:
-```
+```javascript
 HTTP/1.1 201 Created
 Content-Type: application/json
 Content-Length: 85
