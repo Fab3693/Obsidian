@@ -1,3 +1,4 @@
 [[Аннотации]]
 [[Inversion of Control]]
 [[Dependency Injection]]
+[[Bean Scope]]
