@@ -9,3 +9,4 @@ MVC - это паттерн проектирования, разделяющий
 ![[Pasted image 20250724110752.png]]
 ![[Pasted image 20250724111025.png]]
 ![[Pasted image 20250724115040.png]]
+![[Pasted image 20250724120611.png]]
