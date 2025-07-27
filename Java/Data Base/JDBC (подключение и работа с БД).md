@@ -111,14 +111,17 @@ public class JdbcRunner {
   ResultSet rs = stmt.executeQuery("SELECT * FROM products");
 
 - **`prepareStatement()`**  
-  Создает `PreparedStatement` для параметризованных запросов:
-  ```java
-  PreparedStatement pstmt = connection.prepareStatement(
-      "SELECT * FROM products WHERE price > ? AND category = ?"
-  );
-  ```
-</details>
+    Создает `PreparedStatement` для параметризованных запросов:
+    
+    java
+    
 
+- PreparedStatement pstmt = connection.prepareStatement(
+        "SELECT * FROM products WHERE price > ? AND category = ?"
+    );
+    
+
+</details>
 ### 🔒 Безопасность
 <details>
 <summary>Раскрыть детали</summary>
