@@ -87,9 +87,9 @@ public class JdbcRunner {
 ```
 
 
-# Разница между `createStatement` и `prepareStatement` в JDBC
+## Разница между `createStatement` и `prepareStatement` в JDBC
 
-## Основные различия
+### Основные различия
 | Критерий                | `createStatement` (Statement)       | `prepareStatement` (PreparedStatement)   |
 | ------------------------ | ----------------------------------- | ---------------------------------------- |
 | **Параметры**            | ❌ Не поддерживаются                | ✅ Плейсхолдеры `?`                      |
@@ -98,80 +98,6 @@ public class JdbcRunner {
 | **Повторное выполнение** | ❌ Неэффективно                     | ✅ Оптимально для циклов                 |
 | **Пример использования** | DDL-операции (`CREATE`, `ALTER`)    | DML-операции (`SELECT`/`INSERT`/`UPDATE`) |
 
-## Детальное сравнение
-
-### 🛠️ Назначение
-<details>
-<summary>Раскрыть детали</summary>
-
-- **`createStatement()`**  
-  Создает объект `Statement` для статических запросов без параметров:
-  ```java
-  Statement stmt = connection.createStatement();
-  ResultSet rs = stmt.executeQuery("SELECT * FROM products");
-
-- **`prepareStatement()`**  
-    Создает `PreparedStatement` для параметризованных запросов:
-    
-    java
-    
-
-- PreparedStatement pstmt = connection.prepareStatement(
-        "SELECT * FROM products WHERE price > ? AND category = ?"
-    );
-    
-
-</details>
-### 🔒 Безопасность
-<details>
-<summary>Раскрыть детали</summary>
-
-- **Риск с `Statement`**:
-  ```java
-  // Уязвимость к SQL-инъекциям!
-  String userInput = "1; DROP TABLE users;";
-  String sql = "DELETE FROM users WHERE id = " + userInput; 
-  Statement stmt = connection.createStatement();
-  stmt.execute(sql); // Выполнит 2 команды!
-  ```
-
-- **Защита с `PreparedStatement`**:
-  ```java
-  String userInput = "1; DROP TABLE users;";
-  PreparedStatement pstmt = connection.prepareStatement(
-      "DELETE FROM users WHERE id = ?"
-  );
-  pstmt.setString(1, userInput); // Значение экранируется
-  pstmt.executeUpdate(); // Безопасное выполнение
-  ```
-</details>
-
-### ⚡ Производительность
-<details>
-<summary>Раскрыть детали</summary>
-
-- **`Statement`** - перекомпиляция при каждом выполнении:
-  ```java
-  for (int i = 0; i < 1000; i++) {
-      String sql = "INSERT INTO logs (msg) VALUES ('Entry " + i + "')";
-      Statement stmt = connection.createStatement();
-      stmt.executeUpdate(sql); // 1000 компиляций!
-  }
-  ```
-
-- **`PreparedStatement`** - одноразовая компиляция:
-  ```java
-  PreparedStatement pstmt = connection.prepareStatement(
-      "INSERT INTO logs (msg) VALUES (?)"
-  );
-  for (int i = 0; i < 1000; i++) {
-      pstmt.setString(1, "Entry " + i);
-      pstmt.executeUpdate(); // Повторное использование
-  }
-  ```
-</details>
-
-### 🏆 Рекомендации
 ```mermaid
 flowchart TD
     A[Выбор типа запроса] --> B{Есть параметры?}
@@ -180,13 +106,3 @@ flowchart TD
     D -->|Да| E[Используй createStatement]
     D -->|Нет| C
 ```
-
-- **Всегда используйте `PreparedStatement`** для:
-  - Запросов с пользовательским вводом
-  - Пакетной обработки данных
-  - Часто повторяющихся запросов
-  
-- **Допустимо использовать `Statement`** для:
-  - DDL-операций (`CREATE TABLE`, `ALTER INDEX`)
-  - Администрирования БД
-  - Статических запросов без переменных
