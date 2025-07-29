@@ -121,3 +121,12 @@ public class Employee {
 3. Избегайте `TABLE` если не нужна кросс-платформенность  
 
 #hibernate #jpa #database #primary_key #generated_value
+
+## @Value 
+- Внедряет значение из application.properties/yml, строки или выражения SpEL.
+```java
+@Value("${app.name}")
+private String appName;
+```
+Было: ![[Pasted image 20250721144848.png]]
+Стало: ![[Pasted image 20250721144907.png]]
