@@ -130,3 +130,12 @@ private String appName;
 ```
 Было: ![[Pasted image 20250721144848.png]]
 Стало: ![[Pasted image 20250721144907.png]]
+
+## @Value 
+- Внедряет значение из application.properties/yml, строки или выражения SpEL.
+```java
+@Value("${app.name}")
+private String appName;
+```
+Было: ![[Pasted image 20250721144848.png]]
+Стало: ![[Pasted image 20250721144907.png]]
