@@ -4,3 +4,5 @@
 [[Bean Scope]]
 [[Data Base]]
 [[Spring MVC]]
+[[Hibernate]]
+[[Spring Core]]
