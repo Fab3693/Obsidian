@@ -1,6 +1,6 @@
 Начнем с преобразования POJO в строку JSON:
 
-```
+```java
 public class JacksonTest {  
   
   ObjectMapper objectMapper = new ObjectMapper();
@@ -24,7 +24,7 @@ public class JacksonTest {
 
 Теперь посмотрим, как преобразовать строку JSON в объект `Employee` с помощью `ObjectMapper`.
 
-```
+```java
 public class JacksonTest {  
   ...
   @Test  
