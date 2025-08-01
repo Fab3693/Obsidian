@@ -71,17 +71,17 @@
 
 #### 🔗 **Связанные термины**
 
-- [[Component]]
+- [[@Component]]
     
-- [[Service]]
+- [[@Service]]
     
-- [[Repository]]
+- [[@Repository]]
     
-- [[Qualifier]]
+- [[@Qualifier]]
     
-- [[Primary]]
+- [[@Primary]]
     
-- [[Scope]]
+- [[@Scope]]
     
 
 ---
