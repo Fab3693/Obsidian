@@ -1,22 +1,18 @@
 ### 📦 **DTO (Data Transfer Object) для Java-разработчика**
 
-**Простыми словами:** DTO — это "контейнер для данных", который используется для **безопасной передачи информации** между слоями приложения (например, от контроллера к клиенту или обратно).
+**Простыми словами:** DTO — это "контейнер для данных", который используется для **безопасной передачи информации** между слоями приложения, например от контроллера к клиенту в [[Spring MVC]].
 
 ---
 
 #### 🧠 **Зачем нужен DTO?**
 
-1. **🛡 Изоляция модели**  
-    — Не показывать клиенту внутреннюю структуру БД (например, поля `password` или `createdAt`).
+- 🛡️ Изолировать внутренние данные (например, [[JPA]]-[[Entity]]) от внешнего мира.
     
-2. **⚡ Оптимизация данных**  
-    — Объединять поля из нескольких сущностей (например, `User + Profile` → `UserProfileDTO`).
+- ⚡ Вернуть только нужные поля, убрать лишнее (`password`, `createdAt` и т.д.).
     
-3. **🔧 Контроль версий API**  
-    — Позволяет менять API независимо от внутренней модели.
+- 🧪 Упростить валидацию данных при входе (`@Valid`, `@NotBlank`, и др.).
     
-4. **🧹 Валидация входящих данных**  
-    — DTO можно проверять с помощью аннотаций (`@Valid`, `@NotNull`, `@Email` и т.д.).
+- 🔄 Управлять структурой [[JSON-POJO|JSON]] независимо от модели БД.
     
 
 ---
@@ -24,22 +20,21 @@
 #### ⚙️ **Как выглядит DTO?**
 
 ```java
-// Entity (внутренняя модель БД)
+// Entity (отражает таблицу в БД)
 @Entity
 public class User {
     private Long id;
     private String username;
-    private String password; // ❌ Нельзя показывать клиенту!
+    private String password;
     private LocalDateTime createdAt;
 }
 
-// DTO для передачи клиенту
+// DTO (что уйдёт клиенту)
 public class UserDTO {
     private Long id;
     private String username;
-    private String joinDate; // Форматированная дата
+    private String joinDate;
 
-    // Конструктор из Entity
     public UserDTO(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
@@ -48,52 +43,36 @@ public class UserDTO {
 }
 ```
 
----
-
-#### 🔄 **Поток данных в Spring MVC**
-
-```mermaid
-sequenceDiagram
-    Клиент->>Контроллер: POST /users (UserRequestDTO)
-    Контроллер->>Сервис: convertToEntity(UserRequestDTO)
-    Сервис->>Репозиторий: save(userEntity)
-    Репозиторий->>Сервис: userEntity
-    Сервис->>Контроллер: convertToDTO(userEntity)
-    Контроллер->>Клиент: UserResponseDTO (200 OK)
-```
+> DTO обычно сериализуется в JSON (см. [[JSON-POJO]]) и возвращается через [[Spring MVC]]-контроллер.
 
 ---
 
-#### 🛠 **Инструменты работы с DTO**
+#### 🛠 **Как создать и использовать DTO?**
 
-1. **🧰 MapStruct** — автоматическое создание мапперов:
+1. 🧰 С помощью [[MapStruct]]:
     
 
 ```java
 @Mapper
 public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-    
     UserDTO toDto(User user);
-    User toEntity(UserDTO dto);
 }
 ```
 
-2. **⚡ Lombok** — сокращение шаблонного кода:
+2. ⚡ С помощью Lombok:
     
 
 ```java
 @Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class ProductDTO {
     private String name;
     private BigDecimal price;
 }
 ```
 
-3. **📦 Record (Java 14+)** — простой способ описания неизменяемого DTO:
+3. 📦 Через `record` (Java 14+):
     
 
 ```java
@@ -102,113 +81,40 @@ public record UserDTO(Long id, String username) {}
 
 ---
 
-#### 💬 **Типы DTO в практике**
+#### ✅ **Советы**
 
-1. **📥 Request DTO** — используется в `@RequestBody` контроллеров:
+- ❌ Не возвращай `Entity` напрямую — только `DTO`.
     
-
-```java
-public class UserRequestDTO {
-    @NotBlank
-    private String username;
-
-    @Email
-    private String email;
-}
-```
-
-2. **📤 Response DTO** — используется для возврата клиенту:
+- ✅ Используй `@Valid` с `RequestDTO` в контроллерах.
     
-
-```java
-public class UserResponseDTO {
-    private UUID publicId;
-    private String displayName;
-}
-```
-
-3. **🔄 Internal DTO** — для обмена между слоями или микросервисами внутри системы.
+- 🧩 Разделяй DTO по задачам:
     
-
----
-
-#### ✅ **Лучшие практики**
-
-- 🔒 **Никогда не возвращайте Entity напрямую из контроллеров**  
-    → преобразовывайте в DTO для безопасности и стабильности API.
-    
-- 🧪 **Валидируйте входящие DTO** через `@Valid`:
-    
-
-```java
-@PostMapping
-public ResponseEntity<?> register(@Valid @RequestBody UserRequestDTO dto) { ... }
-```
-
-- 🧩 **Используйте разные DTO для разных сценариев**:
-    
-    - `UserRegistrationDTO`
+    - `UserCreateDTO`
         
-    - `UserProfileDTO`
+    - `UserResponseDTO`
         
     - `AdminUserDTO`
         
 
 ---
 
-#### 🚫 **Типичные ошибки**
+#### 🔗 **Связанные термины**
 
-```java
-// ❌ Плохо: возврат Entity (может "утечь" пароль)
-@GetMapping("/{id}")
-public User getUser(@PathVariable Long id) {
-    return userService.findById(id);
-}
-
-// ✅ Хорошо: возвращается DTO
-@GetMapping("/{id}")
-public UserDTO getUser(@PathVariable Long id) {
-    return userMapper.toDto(userService.findById(id));
-}
-```
-
----
-
-#### 📚 **Когда использовать DTO?**
-
-|Сценарий|Рекомендация|
-|---|---|
-|🌐 REST API|Всегда|
-|🧾 Spring MVC + JSP|При сложных формах|
-|🔗 Микросервисы|Обязательно|
-|🧭 Внутренние вызовы|Опционально|
-
----
-
-#### 🔗 **Ссылки и смежные понятия**
-
-- [🔍 Entity](obsidian://open?vault=your-vault&file=JPA)
+- [[Spring MVC]]
     
-- [🗃️ ORM](obsidian://open?vault=your-vault&file=ORM)
+- [[JPA]]
     
-- [🌐 Spring MVC](obsidian://open?vault=your-vault&file=Spring%20MVC)
+- [[ORM]]
     
-- [🧭 JPA](obsidian://open?vault=your-vault&file=JPA)
+- [[JSON-POJO]]
     
-- [🧱 JSON-POJO](obsidian://open?vault=your-vault&file=JSON-POJO)
+- [[JSP]]
+    
+- [[JSTL]]
+    
+- [[Hibernate]]
     
 
 ---
 
-#### 📎 **Дополнительные ресурсы**
-
-- 📘 [MapStruct Docs](https://mapstruct.org/documentation/stable/reference/html/)
-    
-- 🧰 [Spring Blog: DTO & REST](https://spring.io/blog/2018/09/27/what-s-new-in-spring-data-lovelace)
-    
-- 🧠 [Martin Fowler — Local DTO](https://martinfowler.com/bliki/LocalDTO.html)
-    
-
----
-
-#java #spring #dto #mapstruct #mvc #bestpractices
+#java #spring #dto #mvc #restapi #lombok #mapstruct
