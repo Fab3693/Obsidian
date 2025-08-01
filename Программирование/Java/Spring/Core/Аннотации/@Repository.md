@@ -28,7 +28,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 #### 🔗 **Связанные термины:**
 
-- [[Service]]
+- [[@Service]]
     
 - [[Entity]]
     
