@@ -62,7 +62,7 @@ public class AppConfig {
 
 - [[Configuration]]
     
-- [[Component]]
+- [[@Component]]
     
 - [[Autowired]]
     
