@@ -29,7 +29,7 @@
 📍 `${name}` — это переменная, переданная из контроллера:
 
 ```java
-[[ @Controller ]]
+[[@Controller]]
 public class HelloController {
 
     [[ @GetMapping("/hello") ]]
