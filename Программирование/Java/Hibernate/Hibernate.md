@@ -23,7 +23,7 @@
     
 2. Конфигурировать `SessionFactory` или через Spring Boot — автоматически.
     
-3. Работать с `Session`/`EntityManager` для операций над [[Entity]].
+3. Работать с `Session`/[[EntityManager]] для операций над [[Entity]].
     
 
 ```java
