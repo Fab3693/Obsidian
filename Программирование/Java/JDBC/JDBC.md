@@ -80,9 +80,9 @@ public class JdbcRunner {
             var result = statement.executeQuery();  
             while (result.next()) {  
                 System.out.println(result.getLong("id"));  
-            }  
-        }  
-    }  
+            }
+        }
+    }
 }
 ```
 
