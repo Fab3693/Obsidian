@@ -85,5 +85,6 @@ public class BankService {
     
 
 ---
+![[Pasted image 20250811102420.png]]
 
 #java #spring #transaction #jpa #hibernate #transactional
