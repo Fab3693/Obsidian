@@ -90,5 +90,3 @@
 ---
 
 #kafka #consumer #consumergroup #scalability #streaming #eventdriven #microservices
-
-Хочешь, я добавлю сюда схему (ASCII или блок-схему) для наглядного сравнения "Consumers < Partitions / = / >"?
