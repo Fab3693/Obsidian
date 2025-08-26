@@ -52,7 +52,7 @@ KafkaProducer<String, String> producer = new KafkaProducer<>(props);
     
 - [[Broker]]
     
-- [[Partitions|партиция]]
+- [[Partition|партиция]]
     
 - [[Replication]]
     
