@@ -1,10 +1,5 @@
 formulas:
-  Untitled: |
-    if(
-      regexmatch(file.content, "(?s)^###[\\s\\S]*?---"),
-      regexmatch(file.content, "(?s)^###[\\s\\S]*?---")[0],
-      regexmatch(file.content, "(?s)^###[\\s\\S]*$")[0]
-    )
+  Untitled: aliases ()
 views:
   - type: table
     name: Таблица
@@ -14,9 +9,7 @@ views:
     order:
       - file.name
       - formula.Untitled
-    sort:
-      - property: formula.Untitled
-        direction: DESC
+    sort: []
     imageFit: contain
     imageAspectRatio: 1.45
     cardSize: 400
