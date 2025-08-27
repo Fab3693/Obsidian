@@ -1,0 +1,11 @@
+formulas:
+  Untitled: ""
+views:
+  - type: table
+    name: Таблица
+    filters:
+      and:
+        - file.name.startsWith("@")
+    order:
+      - file.name
+    sort: []
