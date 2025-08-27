@@ -1,5 +1,12 @@
 formulas:
-  Untitled: today()
+  Untitled: |
+    (
+      if(
+        file.content.split(/\n-{3,}\n/)[0].split("###").length > 1,
+        file.content.split(/\n-{3,}\n/)[0].split("###")[1],
+        file.content.split(/\n-{3,}\n/)[0]
+      )
+    ).replace(/\r?\n+/g, " ").trim()
 views:
   - type: table
     name: Таблица
