@@ -1,5 +1,5 @@
 formulas:
-  Untitled: ""
+  Untitled: contains()
 views:
   - type: table
     name: Таблица
@@ -9,7 +9,9 @@ views:
     order:
       - file.name
       - formula.Untitled
-    sort: []
+    sort:
+      - property: formula.Untitled
+        direction: ASC
     imageFit: contain
     imageAspectRatio: 1.45
     cardSize: 400
