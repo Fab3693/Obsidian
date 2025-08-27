@@ -8,4 +8,10 @@ views:
         - file.name.startsWith("@")
     order:
       - file.name
+      - formula.Untitled
     sort: []
+    imageFit: contain
+    imageAspectRatio: 1.45
+    cardSize: 400
+  - type: cards
+    name: представление
