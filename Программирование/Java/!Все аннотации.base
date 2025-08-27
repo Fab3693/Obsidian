@@ -1,5 +1,5 @@
 formulas:
-  Untitled: aliases ()
+  Untitled: today()
 views:
   - type: table
     name: Таблица
